@@ -1,6 +1,8 @@
 from django.shortcuts import render
+# This library is for later implementation
 from django.urls import reverse
-from django.http import HttpResponse
+# Following library is for testing initialization
+#from django.http import HttpResponse
 
 # Create your views here.
 def index(request):

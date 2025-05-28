@@ -17,6 +17,7 @@
           <ul class="navbar-nav">
             <li {% if request.path == '/' %} class="nav-item active mr-3" {% else %}
               class="nav-item mr-3" {% endif %}>
+              {% comment %} Refer to urls.py under templates/pages folder, {% endcomment %}
               <a class="nav-link" href={% url "pages:index" %}>Home</a>
             </li>
             <li {% if 'about' in request.path %} class="nav-item active mr-3" {% else %}
@@ -24,8 +25,8 @@
               <a class="nav-link" href={% url "pages:about" %}>About</a>
             </li>
             <li class="nav-item mr-3">
-                {% comment %} fix link {% endcomment %}
-              <a class="nav-link" href="listings.html">Featured Listings</a>
+                {% comment %} Refer to urls.py under templates/listings folder, app_name:urls {% endcomment %}
+              <a class="nav-link" href={% url "listings:listings" %}>Featured Listings</a>
             </li>
           </ul>
 
