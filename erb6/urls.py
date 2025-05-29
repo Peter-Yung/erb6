@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
+# Add config libraries for django look at settings.py file
+from django.conf import settings
+from django.conf.urls.static import static
 
 
-urlpatterns = [ # Always put the most popular scenario on top.
+urlpatterns = [ # Inside [] are for public Always put the most popular scenario on top.
     path('', include('pages.urls', namespace='pages')),     # pages is an APPS level group
     path('listings/', include('listings.urls', namespace='listings')), 
     path('admin/', admin.site.urls),
-] + debug_toolbar_urls()
+    # For private urls, we will add ouside the []
+    ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
