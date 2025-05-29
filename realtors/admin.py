@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
 from .models import Realtor
+# Register your models here.
 
-admin.site.register(Realtor)
+class RealtorAdmin(admin.ModelAdmin):
+    # This code define the listing table fields on backend for user to make changes of data from DB.
+    list_display = ('id','name','email','hire_date')
+    list_display_links = ('id','name')
+    search_fields = ('name',)
+    list_per_page = 25
+
+admin.site.register(Realtor, RealtorAdmin)
