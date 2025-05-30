@@ -1,3 +1,190 @@
-{% extends "base.html" %}{% block content %}
-<h1>listings</h1>
+{% extends "base.html" %}
+{% comment %} Add humanize library {% endcomment %}
+{% load humanize %}
+{% block content %}
+
+{% comment %} <h1>listings</h1> original {% endcomment %} 
+
+    <section id="showcase-inner" class="py-5 text-white">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-12">
+            <h1 class="display-4">Browse Our Properties</h1>
+            <p class="lead">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt,
+              pariatur!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                {% comment %} fix link {% endcomment %}
+                {% comment %} <a href="index.html"> <i class="fas fa-home"></i> Home</a> {% endcomment %}
+                <a href={% url "pages:index"%}> <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">Browse Listings</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Listings -->
+    <section id="listings" class="py-4">
+        <div class="container">
+            <div class="row">
+                {% comment %} Add if statement trusy value shows database data
+                    else shows "No Listings avaliable" statement {% endcomment %}
+                {% if listings %}
+                {% for listing in listings %}
+            <!-- Listing 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                <img
+                    class="card-img-top"
+                    {% comment %} Read url from DB {% endcomment %}
+                    src={{listing.photo_main.url}}
+                    {% comment %} src="assets/img/homes/home-1.jpg" {% endcomment %}
+                    alt=""
+                />
+                <div class="card-img-overlay">
+                    <h2>
+                        <span class="badge badge-secondary text-white">
+                            {% comment %} Extract price from DB, same as below {% endcomment %}
+                            $ {{listing.price | intword}}
+                            {% comment %} $4,900,000 {% endcomment %}
+                        </span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="listing-heading text-center">
+                        <h4 class="text-primary">
+                            {{listing.address | title}}
+                            {% comment %} 45 Prince Street {% endcomment %}
+                        </h4>
+                    <p>
+                        <i class="fas fa-map-marker text-secondary"></i>
+                            {{listing.district | title}} 
+                        {% comment %} Yau Tsim Mong {% endcomment %}
+                    </p>
+                    </div>
+                    <hr />
+                    <div class="row py-2 text-secondary">
+                    <div class="col-6">
+                        <i class="fas fa-th-large"></i> 
+                            Sqft: {{listing.sqrt | intcomma}}
+                        {% comment %} Sqft: 3200 {% endcomment %}
+                    </div>
+                    <div class="col-6">
+                        <i class="fas fa-dumbbell"></i> 
+                            ClubHouse: {{listing.clubhouse}}
+                        {% comment %} ClubHouse: 2 {% endcomment %}
+                    </div>
+                    </div>
+                    <div class="row py-2 text-secondary">
+                    <div class="col-6">
+                        <i class="fas fa-bed"></i> 
+                            Bedrooms: {{listing.bedrooms}}
+                            {% comment %} Bedrooms: 3 {% endcomment %}
+                    </div>
+                    <div class="col-6">
+                        <i class="fas fa-bath"></i> 
+                            Bathrooms: {{listing.bathrooms}}
+                            {% comment %} Bathrooms: 2 {% endcomment %}
+                    </div>
+                    </div>
+                    <hr />
+                    <div class="row py-2 text-secondary">
+                    <div class="col-12">
+                        <i class="fas fa-user"></i> 
+                            {{listing.realtor | title}}
+                        {% comment %} or {{listing.realtor.name}} {% endcomment %}
+                        {% comment %} Kyle Chan {% endcomment %}
+                    </div>
+                    </div>
+                    <div class="row text-secondary pb-2">
+                    <div class="col-6">
+                        <i class="fas fa-clock"></i> 
+                            {% comment %} {% raw %}
+                                {% now 'Asia/Hong_Kong', '%Y-%m-%dT%H:%M:%SZ' %}
+                            {% endraw %} - {{listing.list_date}} days ago {% endcomment %}
+                            {{listing.list_date | timesince}}
+                        {% comment %} 2 days ago {% endcomment %}
+                    </div>
+                    </div>
+                    <hr />
+                    {% comment %} Pass listing id to show more details. {% endcomment %}
+                    <a href={% url "listings:listing" listing.id%} class="btn btn-primary btn-block">
+                    {% comment %} <a href="listing.html" class="btn btn-primary btn-block"> {% endcomment %}
+                    More Info
+                    </a>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+                    {% comment %} New added statements {% endcomment %}
+            {% else %}
+                <div class="col-md-12">
+                    <h2>No Listings avaliable</h2>
+                </div>
+            {% endif %}
+            </div>
+
+        {% comment %} pagination {% endcomment %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% comment %} Following if statement only shows pagination if more then 1 page {% endcomment %}
+                    {% if listings.has_other_pages %}
+                    <ul class="pagination">
+                        {% comment %} This if statement define the first page starting point. {% endcomment %}
+                        {% if listings.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{listings.previous_page_number}}">&laquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">&laquo;</a>
+                        </li>
+                        {% endif %}
+                            {% for i in listings.paginator.page_range %}
+                                {% if listings.number == i %}
+                                <li class="page-item active">
+                                    <a class="page-link">{{i}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{i}}">{{i}}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% comment %} Original hard code button 2 and 3
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li> {% endcomment %}
+                        {% comment %} This if statement define the last page ending point. {% endcomment %}
+                        {% if listings.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{listings.next_page_number}}">&raquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">&raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock content %}

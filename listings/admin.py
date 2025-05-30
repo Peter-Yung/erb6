@@ -16,10 +16,11 @@ class ListingAdmin(admin.ModelAdmin):
     # Define which data field could be search by the search box.
     search_fields = 'title','description','address','price'
     # Paganation of maximum records per pages.
-    list_per_page = 25 
-    # Follow codes is to extend length of all IntegerField (e.g.price field)
+    list_per_page = 25
     ordering = ['-id']
-    prepopulated_fields = {'title': ('title',)}
+    # This statement not allow user input space or slash on title field
+    # prepopulated_fields = {'title': ('title',)}
+    # Follow codes is to extend length of all IntegerField (e.g.price field)
     formfield_overrides = {
         models.IntegerField: {'widget': NumberInput(attrs={'size' : '10'})}
     }

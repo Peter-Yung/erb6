@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',      # Middleware
     'django.contrib.messages',      # Communication
     'django.contrib.staticfiles',
+    'django.contrib.humanize',      # Add djanog extra library for datetime, currency calcuations
 
     "debug_toolbar",             # Register downloaded APPS ~>python -m pip install django-debug-toolbar
     'pages.apps.PagesConfig',    # Register pages folder as APPS level
