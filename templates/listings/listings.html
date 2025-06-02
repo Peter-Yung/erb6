@@ -108,23 +108,24 @@
                         {% comment %} Kyle Chan {% endcomment %}
                     </div>
                     </div>
-                    <div class="row text-secondary pb-2">
-                    <div class="col-6">
-                        <i class="fas fa-clock"></i> 
-                            {% comment %} {% raw %}
-                                {% now 'Asia/Hong_Kong', '%Y-%m-%dT%H:%M:%SZ' %}
-                            {% endraw %} - {{listing.list_date}} days ago {% endcomment %}
-                            {{listing.list_date | timesince}}
-                        {% comment %} 2 days ago {% endcomment %}
+                        <div class="row text-secondary pb-2">
+                        <div class="col-6">
+                            <i class="fas fa-clock"></i> 
+                                {% comment %} {% raw %}
+                                    {% now 'Asia/Hong_Kong', '%Y-%m-%dT%H:%M:%SZ' %}
+                                {% endraw %} - {{listing.list_date}} days ago {% endcomment %}
+                                {{listing.list_date | timesince}}
+                            {% comment %} 2 days ago {% endcomment %}
+                        </div>
+                        </div>
+                        {% comment %} Add a horizontal line {% endcomment %}
+                        <hr />
+                        {% comment %} Pass listing id to endpoint url to show more details. {% endcomment %}
+                        <a href={% url "listings:listing" listing.id%} class="btn btn-primary btn-block">
+                        {% comment %} <a href="listing.html" class="btn btn-primary btn-block"> {% endcomment %}
+                        More Info
+                        </a>
                     </div>
-                    </div>
-                    <hr />
-                    {% comment %} Pass listing id to show more details. {% endcomment %}
-                    <a href={% url "listings:listing" listing.id%} class="btn btn-primary btn-block">
-                    {% comment %} <a href="listing.html" class="btn btn-primary btn-block"> {% endcomment %}
-                    More Info
-                    </a>
-                </div>
                 </div>
             </div>
             {% endfor %}

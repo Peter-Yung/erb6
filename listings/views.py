@@ -19,7 +19,7 @@ def index(request):
     # context = {"name" : "something"}
     return render(request,'listings/listings.html',context) # Pass variable to render templates
 
-def listing(request,listing_id):
+def listing(request,listing_id):    # listing_id is resolved by urls.py
     return render(request,'listings/listing.html')
 
 def search(request):
