@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from listings.models import Listing
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
@@ -20,7 +20,10 @@ def index(request):
     return render(request,'listings/listings.html',context) # Pass variable to render templates
 
 def listing(request,listing_id):    # listing_id is resolved by urls.py
-    return render(request,'listings/listing.html')
+    # query set short cut of 1 house by listing_id, need "or_404" because real time house data might be deleted.
+    listing = get_object_or_404(Listing,pk=listing_id)
+    context = {"listing" : listing}
+    return render(request,'listings/listing.html', context)
 
 def search(request):
     return render(request,'listings/search.html')
