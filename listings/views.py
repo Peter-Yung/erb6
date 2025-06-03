@@ -9,8 +9,9 @@ def index(request):
     paginator = Paginator(listings,3)   # Classify each page contain 3 records only
     page = request.GET.get('page')      # From frontend: Use Get method to retrive frontend data.
     paged_listings = paginator.get_page(page)   # Organize objects and pass page no. to the context.
-    context = {"listings":paged_listings} # Pass dictionaries from new DB object into a variable
-    # context = {"listings":listings} # Pass dictionaries from DB object into a variable
+    context = {"listings" : paged_listings} 
+    # Pass dictionaries from new DB object into a variable
+    # context = {"listings":listings} # Old code
 
     # original: return render(request,'listings/listings.html')
     # Step 1: One variable: Pass dictionary of data to the listings

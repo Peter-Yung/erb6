@@ -48,10 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',      # Add djanog extra library for datetime, currency calcuations
 
-    "debug_toolbar",             # Register downloaded APPS ~>python -m pip install django-debug-toolbar
-    'pages.apps.PagesConfig',    # Register pages folder as APPS level
-    'listings.apps.ListingsConfig',
-    'realtors.apps.RealtorsConfig',
+    "debug_toolbar",                # Register downloaded APPS ~>python -m pip install django-debug-toolbar
+    'pages.apps.PagesConfig',       # Register pages folder as APPS level
+    'listings.apps.ListingsConfig', # Defined listings Apps
+    'realtors.apps.RealtorsConfig', # Defined realtors Apps
 ]
 
 # These middleware calls Django login library
