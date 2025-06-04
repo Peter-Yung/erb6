@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from realtors.models import Realtor     # Import Realtor class as primary key
 from datetime import datetime
-
+from pages.choices import district_choices # Give user pull down list to select in backend.(Data validation)
 
 # Create your models here.
 class Listing(models.Model):
@@ -12,7 +12,7 @@ class Listing(models.Model):
     price = models.IntegerField()
     address = models.CharField(max_length=200)
     street = models.CharField(max_length=200)
-    district = models.CharField(max_length=50)
+    district = models.CharField(max_length=50, choices=district_choices.items())
     description = models.TextField(blank=True)  # Allow missing value
     bedrooms = models.IntegerField()
     bathrooms = models.DecimalField(max_digits=2, decimal_places=1)

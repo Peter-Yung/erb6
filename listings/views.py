@@ -30,15 +30,15 @@ def listing(request,listing_id):    # listing_id is resolved by urls.py
 
 def search(request):
     queryset_list = Listing.objects.order_by('-list_date')
-
+    # Use .GET method to retrive data from data form, no need to encrypt.
     if 'keywords' in request.GET:
         keywords = request.GET['keywords']
         if keywords:
-            queryset_list = queryset_list.filter(description__incontains=keywords)
+            queryset_list = queryset_list.filter(description__icontains=keywords)
     if 'title' in request.GET:
         title = request.GET['title']
         if title:
-            queryset_list = queryset_list.filter(title__incontains=title)
+            queryset_list = queryset_list.filter(title__icontains=title)
     if 'district' in request.GET:
         district = request.GET['district']
         if district:

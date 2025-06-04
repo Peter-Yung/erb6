@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [ # Inside [] are for public Always put the most popular scenario on top.
     path('', include('pages.urls', namespace='pages')),     # pages is an APPS level group
     path('listings/', include('listings.urls', namespace='listings')), 
+    path('accounts/', include('accounts.urls', namespace='accounts')),  # Add account app url
     path('admin/', admin.site.urls),
     # For private urls, we will add ouside the []
     ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

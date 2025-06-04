@@ -1,0 +1,28 @@
+{% if messages %}
+    <!-- Messages -->
+    <!-- Check all errors and use for loop to store all errors -->
+    {% for message in messages %} 
+    <div class="container" id="message">
+        <!-- Bootstrap container -->
+        <div 
+            class="alert alert-{{message.tags}} alert-dismissible text-center" 
+            role="alert"
+        >
+            <!-- Button for dismiss container alert -->
+            <button class="close" type="button" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <!-- Use Bold charactors to shows the message -->
+            <strong>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    Error: 
+                {% else %}
+                    <!--Partial page no need to import humanize library if main page have it -->
+                    {{message.tags | title}} 
+                {% endif %}
+            </strong>{{message}}
+        </div>
+    </div>
+    {% endfor %} 
+    <!-- End Messages -->
+{% endif %}

@@ -11,6 +11,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from django.contrib.messages import constants as messages # Add messages framework for login page
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',       # Register pages folder as APPS level
     'listings.apps.ListingsConfig', # Defined listings Apps
     'realtors.apps.RealtorsConfig', # Defined realtors Apps
+    'accounts.apps.AccountsConfig', # Defined account Apps
 ]
 
 # These middleware calls Django login library
@@ -167,3 +169,10 @@ INTERNAL_IPS = [
 # Add media folder and paths
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+# Declare message
+# Pass variables to Bootstrap message box
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger',
+    messages.SUCCESS : 'success'
+}
