@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 # Import user model library (It's build-in model no need to create Apps) from .virtualenv
 from django.contrib.auth.models import User
+# Import contact class from contacts model for Dashboard display
+from contacts.models import Contact
 
 # According to urls.py, create your views here.
 def register(request):
@@ -58,4 +60,6 @@ def logout(request):
     return redirect("pages:index")
 
 def dashboard(request):
-    return render(request,'accounts/dashboard.html')
+    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    context = {"contacts" : user_contacts}
+    return render(request,'accounts/dashboard.html',context)

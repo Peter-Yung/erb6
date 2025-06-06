@@ -1,6 +1,8 @@
 <!-- Use Jinja syntax to call "base.html" loading the regular code on this page -->
 {% extends "base.html" %} 
 {% load humanize %}
+<!-- block title -->
+{% block title %} | Welcome {% endblock title %}
 {% block content %}
 {% comment %} <h1>home</h1> {% endcomment %}
 

@@ -1,4 +1,8 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% load humanize %}
+<!-- block title -->
+{% block title %} | Welcome {{user.first_name}} ! {% endblock title %}
+{% block content %}
     {% comment %} <h1>dashboard</h1> original test code {% endcomment %}
     <section id="showcase-inner" class="py-5 text-white">
       <div class="container">
@@ -28,11 +32,18 @@
       </div>
     </section>
 
+    {% comment %} Display message if necessary. {% endcomment %}
+    {% include "partials/_alert.html" %}
+
     <section id="dashboard" class="py-4">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h2>Welcome John</h2>
+            {% comment %} Fix content {% endcomment %}
+            {% comment %} <h2>Welcome John</h2> {% endcomment %}
+            <h2>Welcome {{user.first_name | title}}</h2>
+          {% comment %} At least one contacts to show this table {% endcomment %}
+          {% if contacts %}
             <p>Here are the property listings that you have inquired about</p>
             <table class="table">
               <thead>
@@ -43,13 +54,29 @@
                 </tr>
               </thead>
               <tbody>
+                {% for contact in contacts %}
                 <tr>
-                  <td>22</td>
-                  <td>45 Prince Street</td>
+                  <td>{{contact.id}}</td>
+                  <td>{{contact.listing}}</td>
                   <td>
-                    <a class="btn btn-light" href="#">View Listing</a>
+                    <a class="btn btn-light" 
+                    href="{% url 'listings:listing' contact.listing_id %}">
+                      View Listing
+                    </a>
+                    {% comment %} Add Delete button {% endcomment %}
+                    <a href="{% url 'contacts:delete_contact' contact.id %}" 
+                    class="btn btn-danger">
+                      Delete Listing
+                    </a>
+                    {% comment %} Add Edit button {% endcomment %}
+                    <a href="{% url 'contacts:edit_contact' contact.id %}" 
+                    class="btn btn-success">
+                      Edit Listing
+                    </a>
                   </td>
                 </tr>
+                 {% endfor %}
+                {% comment %} 
                 <tr>
                   <td>43</td>
                   <td>22 Westbrook rd</td>
@@ -63,9 +90,11 @@
                   <td>
                     <a class="btn btn-light" href="#">View Listing</a>
                   </td>
-                </tr>
+                </tr> 
+                {% endcomment %}
               </tbody>
             </table>
+          {% endif %}
           </div>
         </div>
       </div>

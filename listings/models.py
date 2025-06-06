@@ -33,5 +33,6 @@ class Listing(models.Model):
         ordering = ('-list_date',)
         indexes = [models.Index(fields=['list_date'])]
 
+    # This is system function and must indent under class.
     def __str__(self):
         return self.title

@@ -2,6 +2,8 @@
 <!-- load statics and humanize, use comments to prevent "%}" on next row error  -->
 {% load static %}
 {% load humanize %}
+<!-- block title -->
+{% block title %} | {{listing.title}} {% endblock title %}
 <!-- block content -->
 {% block content %}
 {% comment %} <h1>listing</h1> {% endcomment %}
@@ -43,6 +45,9 @@
         </nav>
       </div>
     </section>
+
+    {% comment %} Display message if necessary. {% endcomment %}
+    {% include "partials/_alert.html" %}
 
     <!-- Listing -->
     <section id="listing" class="py-4">
@@ -264,30 +269,54 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            {% comment %} <!-- Add end point here! --> {% endcomment %}
+            <form action="{% url 'contacts:contact' %}" method="POST">
+              {% csrf_token %}
+              {% comment %} Pass form data back to the Database {% endcomment %}
+              <input type="hidden" name="listing_id" value="{{listing.id}}" />
+              <input type="hidden" name="realtor_email" value="{{listing.realtor.email}}" />
+                {% comment %} Check if inquiry had user login or not {% endcomment %}
+                {% if user.is_authenticated %}
+                  <input type="hidden" name="user_id" value="{{user.id}}" />
+                {% else %}
+                  <input type="hidden" name="user_id" value="0" />
+                {% endif %}
+                  <div class="form-group">
+                    <label for="property_name" class="col-form-label">Property:
+                    </label>
+                    <input
+                      type="text"
+                      name="listing"
+                      class="form-control"
+                      {% comment %} value="45 Prince Street" {% endcomment %}
+                      value="{{listing.title | title}}"
+                      {% comment %} readonly means customer no need to change. {% endcomment %}
+                      {% comment %} we can use disabled because no date return, use readonly instead. {% endcomment %}
+                      readonly
+                    />
+                  </div>
               <div class="form-group">
-                <label for="property_name" class="col-form-label"
-                  >Property:</label
-                >
-                <input
-                  type="text"
-                  name="listing"
-                  class="form-control"
-                  value="45 Prince Street"
-                  disabled
+                <label for="name" class="col-form-label">Name:</label>
+                {% comment %} <input type="text" name="name" class="form-control" required /> {% endcomment %}
+                {% comment %} If user is registered, they no need to input name again. {% endcomment %}
+                <input type="text" name="name" class="form-control" 
+                {% if user.is_authenticated %}
+                  value="{{user.first_name}} {{user.last_name}}"
+                  {% comment %} disabled {% endcomment %} 
+                  readonly
+                {% endif %}
                 />
               </div>
               <div class="form-group">
-                <label for="name" class="col-form-label">Name:</label>
-                <input type="text" name="name" class="form-control" required />
-              </div>
-              <div class="form-group">
                 <label for="email" class="col-form-label">Email:</label>
-                <input
-                  type="email"
-                  name="email"
-                  class="form-control"
-                  required
+                {% comment %} <input type="email" name="email" class="form-control" required /> {% endcomment %}
+                {% comment %} If user is registered, they no need to input email again. {% endcomment %}
+                <input type="email" name="email" class="form-control" 
+                {% if user.is_authenticated %}
+                  value="{{user.email}}" 
+                  {% comment %} disabled {% endcomment %}
+                  readonly
+                {% endif %} 
                 />
               </div>
               <div class="form-group">

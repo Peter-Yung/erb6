@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',       # Register pages folder as APPS level
     'listings.apps.ListingsConfig', # Defined listings Apps
     'realtors.apps.RealtorsConfig', # Defined realtors Apps
-    'accounts.apps.AccountsConfig', # Defined account Apps
+    'accounts.apps.AccountsConfig', # Defined accounts Apps
+    'contacts.apps.ContactsConfig', # Defined contacts Apps
 ]
 
 # These middleware calls Django login library
@@ -173,6 +174,14 @@ MEDIA_URL = '/media/'
 # Declare message
 # Pass variables to Bootstrap message box
 MESSAGE_TAGS = {
-    messages.ERROR : 'danger',
-    messages.SUCCESS : 'success'
+    messages.ERROR  : 'danger',
+    messages.SUCCESS: 'success'
 }
+
+# Add Email backend
+EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST          = 'smtp.gmail.com'
+EMAIL_PORT          = 587
+EMAIL_HOST_USER     = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS       = True

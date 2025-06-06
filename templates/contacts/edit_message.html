@@ -1,0 +1,8 @@
+{% comment %} {% extends "base.html" %} {% endcomment %}
+<form method="POST">
+    {% csrf_token %}
+    {{form.message}}
+    <button type="submit">
+        Send
+    </button>
+</form>
