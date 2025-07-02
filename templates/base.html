@@ -27,13 +27,16 @@
     {% include "partials/_navbar.html" %}
     {% block content %}{% endblock %}
     {% include "partials/_footer.html" %}
+    {% comment %} Order of js files affect the efficiency of webpage!!! {% endcomment %}
     <!--script src="assets/js/jquery-3.3.1.min.js"></script-->
-    <script src={% static "js/jquery-3.3.1.min.js" %}></script>
     <!--script src="assets/js/bootstrap.bundle.min.js "></script-->
+    <!--script src="assets/js/main.js "></script-->
+    <script src={% static "js/jquery-3.3.1.min.js" %}></script>
     <script src={% static "js/bootstrap.bundle.min.js" %}></script>
     <!--missing from source!!!-->
-    <script src={% static "js/lightbox.min.js" %}></script>
-    <!--script src="assets/js/main.js "></script-->
+    <script src={% static "js/lightbox.min.js" %}></script> 
     <script src={% static "js/main.js" %}></script>
+    <!--Add this new javascript file to control the pop up table on Dashboard-->
+    <script src={% static "js/modal.js" %}></script>
   </body>
 </html>
